@@ -1,72 +1,59 @@
 <template>
   <div id="app" class="container">
-        <h1>Todo App</h1>
-        
-            
-        
+        <h1></h1>  
         <div class="row cangiua" >
             <input type="text" v-model="selectedTodo.name" class="col-3" placeholder="Task Name">
-            <input type="datetime-local" v-model="selectedTodo.deadline" class="col-3"placeholder="Deadline">
+            <input type="datetime-local" v-model="selectedTodo.deadline" class="col-3" placeholder="Deadline">
             <button v-if="!isEditing" 
                 type="button" @click="storeTodo" 
-                class="btn btn-success col-1"
+                class="btn btn-success col-1" 
             >Add Task</button>
             <button 
                 v-else
                 type="button" 
                 @click="updateTodo" 
-                class="btn btn-success col-1"
+                class="btn btn-success col-1" 
             >Edit Task</button>
         </div>
-
-    
-
         <h1 class="text-center">List Todo</h1>
 
-        <input class="col-4 timkiem" type="text" v-model="search" placeholder="Search">
+        <input class="col-3 timkiem" type="text" v-model="search" placeholder="Search Task Name">
         <table>
             <tr>
               <th>Task Name</th>
               <th>Deadline</th>
               <th style="width: 160px;">Action</th>
             </tr>
-            <tr v-for="(item, index) in filterList">
-              <td>{{ item.name }}</td>
-              <td>{{ item.deadline }}</td>
-              <th>
-                <button @click="editTodo(index)" class="btn btn-warning">Edit</button>
-                <button @click="removeTodo(index)" class="btn btn-warning" style="background-color: red;">Delete</button>
-              </th>
-            </tr>
+              <items-component v-for="(item, index) in filterList" 
+                              :key="index" 
+                              :item="item"
+                              @msg-index="editTodo(index)"
+                              @msg-index2="removeTodo(index)"
+                              > 
+              </items-component>
           </table>
-
-
-
-        <!-- <ol>
-            <li v-for="(item, index) in todos">
-                <span>Task name: {{ item.name }}</span>
-                <span>Deadline: {{ item.deadline }}</span>
-                <button @click="editTodo(index)" class="btn btn-warning">Edit</button>
-                <button @click="removeTodo(index)" class="btn btn-warning" style="background-color: red;">Delete</button>
-            </li>
-        </ol> -->
     </div>
 </template>
 
 <script>
+import ItemsComponent from './ItemsComponent'
+
+
 export default {
   name: 'component-todoList',
   data() {
     return {
         isEditing: false,
-            todos: [],
-            selectedTodo: {},
-            selectedIndex: null,
-            search: ''
-    }
-    
+        todos: [],
+        selectedTodo: {},
+        selectedIndex: null,
+        search: '',
+    } 
   },
-    
+  
+  components: {
+    ItemsComponent
+  },
     methods: {
         storeTodo() {
             this.todos.push(this.selectedTodo)
@@ -82,12 +69,12 @@ export default {
             this.selectedTodo = {}
             this.isEditing = false
         },
-
         editTodo(index) {
             this.isEditing = true
             this.selectedTodo = this.todos[index];
             this.selectedIndex = index;
-        }
+        }, 
+        
     },
     computed: {
     filterList() {
@@ -97,6 +84,7 @@ export default {
     }
   }
 }
+   
 </script>
 
 <style scoped>
@@ -107,8 +95,9 @@ export default {
         justify-content: center;
     }
     .timkiem {
-        float: left;
-        border-radius: 10px;
+        float: right;
+        border-radius: 15px;
+        margin-bottom: 20px;
     }
     input:focus {
         

@@ -7,6 +7,7 @@
 
 <script>
 import ComponentTodoList from './components/TodoList'
+
 export default {
   name: 'App',
   data() {
@@ -15,7 +16,8 @@ export default {
     }
   },
   components: {
-    ComponentTodoList
+    ComponentTodoList,
+    
   }
 }
 </script>
