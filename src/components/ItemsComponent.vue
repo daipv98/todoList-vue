@@ -22,9 +22,7 @@ export default {
   props: ['item'],
 
   methods: {
-    removeTodo(index) {
-            this.todos.splice(index, 1)
-        },
+    
     testIndex(index) {
       this.$emit('msg-index',index)
     },
