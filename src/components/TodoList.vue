@@ -41,6 +41,9 @@ import ItemsComponent from './ItemsComponent'
 
 export default {
   name: 'component-todoList',
+  created() {
+    this.todos = JSON.parse(localStorage.getItem('myStore' || '[]'))
+  },
   data() {
     return {
         isEditing: false,
@@ -58,21 +61,25 @@ export default {
         storeTodo() {
             this.todos.push(this.selectedTodo)
             this.selectedTodo = {}
+            localStorage.setItem('myStore', JSON.stringify(this.todos))
         },
 
         removeTodo(index) {
             this.todos.splice(index, 1)
+            localStorage.setItem('myStore', JSON.stringify(this.todos))
         },
 
         updateTodo() {
             this.todos[this.selectedIndex] = this.selectedTodo;
             this.selectedTodo = {}
             this.isEditing = false
+            localStorage.setItem('myStore', JSON.stringify(this.todos))
         },
         editTodo(index) {
             this.isEditing = true
             this.selectedTodo = this.todos[index];
             this.selectedIndex = index;
+            localStorage.setItem('myStore', JSON.stringify(this.todos))
         }, 
         
     },
